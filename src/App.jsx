@@ -33,8 +33,8 @@ function App() {
       <div className="flex justify-end mb-5">
         <button className="btn btn-primary" onClick={() => document.getElementById('ajout-modal')?.showModal()}>Ajouter une tache</button>
       </div>
-      <TableListTache listeTache={listeTache} />
-      <ModalAjoutTache listeTache={listeTache} setListeTache={setListeTache} />
+      <TableListTache listeTache={listeTache} serverUrl={serverUrl} setListeTache={setListeTache} />
+      <ModalAjoutTache listeTache={listeTache} setListeTache={setListeTache} serverUrl={serverUrl} />
     </div>
   )
 }

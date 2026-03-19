@@ -1,6 +1,27 @@
+import axios from "axios";
 import React from "react";
 
-function TableListTache({ listeTache }) {
+function TableListTache({ listeTache, serverUrl, setListeTache }) {
+
+  // on supprime une tache de la liste des taches en cliquant sur le bouton supprimer
+  const SupprimeTache = async (idTache) => {
+    try {
+      if (confirm("Êtes-vous sûr de vouloir supprimer cette tache ? la suppression est irréversible")) {
+        // on envoie une requete de suppression au backend pour supprimer la tache de la base de données
+        const req = await axios.delete(`${serverUrl}/ListeTaches/${idTache}`)
+
+        // on filtre l'ancien tableau pour le mettre à jour
+        const filtre = listeTache?.filter(item => item.id !== idTache)
+        // on met à jour le state pour que la tache supprimée disparaisse du tableau sans recharger la page
+        setListeTache(filtre)
+      }
+      } catch (error) {
+        console.log(error)
+      alert("Une erreur est survenue lors de la suppression de la tache")
+    }
+  }
+
+
   return (
     <div className="overflow-x-auto">
       <table className="table w-full">
@@ -49,7 +70,7 @@ function TableListTache({ listeTache }) {
                   <td className="border-b dark:border-gray-300 px-4 py-4">
                     <div className="flex items-center space-x-4">
                       <button className="btn btn-info">Modifier</button>
-                      <button className="btn btn-error">Supprimer</button>
+                      <button className="btn btn-error" onClick={() => SupprimeTache(tache?.id)}>Supprimer</button>
                     </div>
                   </td>
                 </tr>
